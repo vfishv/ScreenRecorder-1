@@ -231,13 +231,32 @@ public class MainActivity extends Activity {
         return r;
     }
 
-
+    private static final String TAG = "MainActivity";
     private VirtualDisplay getOrCreateVirtualDisplay(MediaProjection mediaProjection, VideoEncodeConfig config) {
         if (mVirtualDisplay == null) {
+            VirtualDisplay.Callback callback = new VirtualDisplay.Callback(){
+                @Override
+                public void onPaused() {
+                    Log.e(TAG, "onPaused: ");
+                    super.onPaused();
+                }
+
+                @Override
+                public void onResumed() {
+                    Log.e(TAG, "onResumed: ");
+                    super.onResumed();
+                }
+
+                @Override
+                public void onStopped() {
+                    Log.e(TAG, "onStopped: ");
+                    super.onStopped();
+                }
+            };
             mVirtualDisplay = mediaProjection.createVirtualDisplay("ScreenRecorder-display0",
                     config.width, config.height, 1 /*dpi*/,
                     DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC,
-                    null /*surface*/, null, null);
+                    null /*surface*/, callback, null);
         } else {
             // resize if size not matched
             Point size = new Point();

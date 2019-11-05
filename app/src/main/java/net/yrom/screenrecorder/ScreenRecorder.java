@@ -188,7 +188,8 @@ public class ScreenRecorder {
         }
 
         // "turn on" VirtualDisplay after VideoEncoder prepared
-        mVirtualDisplay.setSurface(mVideoEncoder.getInputSurface());
+        Surface surface = mVideoEncoder.getInputSurface();
+        mVirtualDisplay.setSurface(surface);
         if (VERBOSE) Log.d(TAG, "set surface to display: " + mVirtualDisplay.getDisplay());
     }
 
